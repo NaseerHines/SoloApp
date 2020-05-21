@@ -5,11 +5,6 @@ const { Hide } = require("../config");
 const apiRouter = Router();
 
 apiRouter.get("/lookup/account/:gamertag/:platform", (req, res) => {
-  // const options = {
-  //   headers: {
-  //     Authorization: `Bearer ${Hide.TOKEN}`,
-  //   },
-  // };
   const { gamertag, platform } = req.params;
   return axios
     .get(`${Hide.URL}${gamertag}/${platform}/generic`, {
