@@ -1,20 +1,24 @@
 const { Router } = require("express");
 const axios = require("axios");
 const { Hide } = require("../config");
+
 const apiRouter = Router();
+
 apiRouter.get("/lookup/account/:gamertag/:platform", (req, res) => {
-  const options = {
-    headers: {
-      Authorization: `Bearer ${Hide.TOKEN}`,
-    },
-  };
+  // const options = {
+  //   headers: {
+  //     Authorization: `Bearer ${Hide.TOKEN}`,
+  //   },
+  // };
   const { gamertag, platform } = req.params;
-  const request = `${Hide.URL}/${gamertag}/${platform}/all`;
-  console.log(gamertag, platform);
   return axios
-    .get(request, options)
+    .get(`${Hide.URL}${gamertag}/${platform}/generic`, {
+      headers: {
+        Authorization: `Bearer ${Hide.TOKEN}`,
+      }
+    })
     .then((account) => {
-      console.log(account.data);
+      console.log(account);
       res.send(account.data);
     })
     .catch((error) => {
@@ -22,6 +26,7 @@ apiRouter.get("/lookup/account/:gamertag/:platform", (req, res) => {
       res.send("error", error);
     });
 });
+
 apiRouter.get("/test", (req, res) => {
   console.log(Hide.TOKEN);
   console.log(Hide.URL);
