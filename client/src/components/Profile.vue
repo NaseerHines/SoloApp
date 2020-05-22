@@ -9,46 +9,26 @@
     </div>
     <div v-if="profileData" class="container">
       <h1 class="gamertag">
-        <img :src="profileData.platformInfo.avatarUrl" alt class="platform-avatar" />
-        {{profileData.platformInfo.platformUserId}}
+        <img :src="profileData.avatar_url_146" alt class="platform-avatar" />
+        {{profileData.username}}
       </h1>
       <div class="grid">
         <div>
-          <img :src="profileData.segments[1].metadata.imageUrl" alt />
+          <img :src="profileData.avatar_url_146" alt />
         </div>
         <div>
           <ul>
             <li>
-              <h4>Selected Legend</h4>
-              <p>{{profileData.metadata.activeLegendName}}</p>
-            </li>
-            <li v-if="profileData.segments[0].stats.season2Wins">
-              <h4>Season 2 Wins</h4>
-              <p>
-                {{profileData.segments[0].stats.season2Wins.displayValue}}
-                <span>({{profileData.segments[0].stats.season2Wins.percentile}})</span>
-              </p>
-            </li>
-            <li v-if="profileData.segments[0].stats.level">
-              <h4>Apex Level</h4>
-              <p>
-                {{profileData.segments[0].stats.level.displayValue}}
-                <span>({{profileData.segments[0].stats.level.percentile}}%)</span>
-              </p>
-            </li>
-            <li v-if="profileData.segments[0].stats.kills">
-              <h4>Lifetime Kills</h4>
-              <p>
-                {{profileData.segments[0].stats.kills.displayValue}}
-                <span>({{profileData.segments[0].stats.kills.percentile}}%)</span>
-              </p>
-            </li>
-            <li v-if="profileData.segments[0].stats.damage">
-              <h4>Damage Done</h4>
-              <p>
-                {{profileData.segments[0].stats.damage.displayValue}}
-                <span>({{profileData.segments[0].stats.damage.percentile}}%)</span>
-              </p>
+              <h4>Account Level</h4>
+              <p>{{profileData.progression.level}}</p>
+              <h4>Playtime</h4>
+              <p>{{Math.round(profileData.stats.general.playtime / 60 / 60)}} hours</p>
+              <h4>Platform</h4>
+              <p>{{profileData.platform}}</p>
+              <h4>KD Ratio</h4>
+              <p>{{profileData.stats.general.kd}}</p>
+              <h4>WL Ratio</h4>
+              <p>{{profileData.stats.general.wl}}</p>
             </li>
           </ul>
         </div>
@@ -72,12 +52,18 @@ export default {
     document.body.className = "body-bg-no-image";
   },
   async created() {
+    const TOKEN = "9daeb7ab-8cf3-4ac2-af17-08843554590c";
     this.loading = true;
     try {
-      const res = await axios.get(
-        `lookup/account/${this.$route.params.gamertag}/${this.$route.params.platform}`
+      const account = await axios.get(
+        `https://api2.r6stats.com/public-api/stats/${this.$route.params.gamertag}/${this.$route.params.platform}/generic`, 
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          }
+        }
       );
-      this.profileData = res;
+      this.profileData = account.data;
       console.log(this.profileData);
       this.loading = false;
     } catch (err) {
@@ -87,6 +73,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .container {
   background: rgba(0, 0, 0, 0.5);
