@@ -6,8 +6,8 @@
         <label for="platform">Platform</label>
         <select name="platform" id="platform" v-model="platform">
           <option value="psn">Playstation</option>
-          <option value="xbl">Xbox</option>
-          <option value="Origin">Origin</option>
+          <option value="xbox">Xbox</option>
+          <option value="pc">Uplay</option>
           <option value="select">Select a platform</option>
         </select>
       </div>
@@ -18,7 +18,7 @@
           name="text"
           v-model="gamertag"
           id="gamertag"
-          placeholder="Origin ID, Xbox Live gamertag, PSN ID, etc"
+          placeholder="Uplay ID, Xbox Live gamertag, PSN ID, etc"
         />
       </div>
       <div class="form-group">
