@@ -5,9 +5,9 @@
       <div class="form-group">
         <label for="platform">Platform</label>
         <select name="platform" id="platform" v-model="platform">
-          <option value="psn">Playstation</option>
-          <option value="xbox">Xbox</option>
           <option value="pc">Uplay</option>
+          <option value="xbox">Xbox</option>
+          <option value="psn">Playstation</option>
           <option value="select">Select a platform</option>
         </select>
       </div>
