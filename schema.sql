@@ -3,6 +3,7 @@
  * Execute this file from the command line by typing:
  *   mysql -u root < schema.sql
  */
+ 
 DROP DATABASE IF EXISTS siege;
 CREATE DATABASE siege;
 USE siege;
@@ -24,10 +25,10 @@ CREATE TABLE `Favorites` (
   `account` int,
   `favoritesList` varchar(255)
 );
-CREATE TABLE `History` (
+CREATE TABLE `Frequently` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `account` int,
-  `historyList` varchar(255)
+  `frequent List` varchar(255)
 );
 CREATE TABLE `Stats` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -36,7 +37,7 @@ CREATE TABLE `Stats` (
   `wlratio` int,
   `playtime` int
 );
-ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `History` (`account`);
+ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Frequently` (`account`);
 ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Team` (`squadLeader`);
 ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Stats` (`account`);
 ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Favorites` (`account`);
