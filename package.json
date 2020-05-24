@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
+    "db": "mysql -u root < schema.sql",
     "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -25,6 +26,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "node-fetch": "^2.6.0",
     "r6statsapi": "^1.0.3"
   },
