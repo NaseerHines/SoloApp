@@ -1,6 +1,11 @@
 const {
     Router
 } = require("express");
+const {
+    getUserSavedList,
+    addToUserSavedList,
+    removeFromUserSavedList,
+} = require('../db');
 const axios = require("axios");
 const {
     Hide
@@ -26,6 +31,39 @@ apiRouter.get("/lookup/account/:gamertag/:platform", (req, res) => {
         .catch((error) => {
             console.log("error", error);
             res.send("error", error);
+        });
+});
+
+userRouter.get('/lookup/account/freqList', (req, res) => {
+    getUserSavedList()
+        .then((user) => {
+            res.send(user);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.send(err);
+        });
+});
+userRouter.post('/lookup/account/freqList', (req, res) => {
+    addToUserSavedList(req.body)
+        .then((user) => {
+            console.log('Account created!');
+            res.send('account saved');
+        })
+        .catch((err) => {
+            console.log(err);
+            res.send(err);
+        });
+});
+userRouter.delete('/lookup/account/freqList/:id', (req, res) => {
+    removeFromUserSavedList(req.params.id)
+        .then((user) => {
+            console.log('Account created!');
+            res.send('account saved');
+        })
+        .catch((err) => {
+            console.log(err);
+            res.send(err);
         });
 });
 

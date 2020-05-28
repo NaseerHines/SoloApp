@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Search from "./components/Search.vue";
 import Profile from "./components/Profile.vue";
-import Frequently from "./components/Frequently.vue";
+import SavedList from "./components/SavedList.vue";
 import Squads from "./components/Squads.vue";
 import Team from "./components/Team.vue";
 Vue.use(Router);
@@ -20,9 +20,9 @@ export default new Router({
       component: Profile,
     },
     {
-      path: "/Frequently",
-      name: "Frequently",
-      component: Frequently,
+      path: "/SavedList",
+      name: "SavedList",
+      component: SavedList,
     },
     {
       path: "/Squads",

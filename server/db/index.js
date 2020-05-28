@@ -11,6 +11,8 @@ const connection = mysql.createConnection({
     database: DB_NAME,
 });
 
+const query = util.promisify(connection.query).bind(connection);
+
 connection.connect((err) => {
     if (err) {
         console.log(err);
@@ -18,3 +20,24 @@ connection.connect((err) => {
         console.log("Database connected");
     }
 });
+
+const getUserSavedList = (id) => {
+    const mysqlQuery = 'SELECT * FROM SavedList WHERE Account = ?;';
+    return query(mysqlQuery, [id]);
+};
+
+const addToUserSavedList = ({user}) => {
+  const mysqlQuery = 'INSERT INTO SavedList VALUES(null, ?, ?, ?);';
+  return query(mysqlQuery, [user.id, user.gamertag, user.platform]);
+};
+
+const removeFromUserSavedList = (id) => {
+    const mysqlQuery = 'DELETE FROM SavedList WHERE id = ?;';
+    return query(mysqlQuery, [id]);
+};
+
+module.exports = {
+    getUserSavedList,
+    addToUserSavedList,
+    removeFromUserSavedList,
+};
