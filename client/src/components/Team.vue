@@ -59,68 +59,26 @@ export default {
     document.body.className = "body-bg-no-image";
   },
 async created() {
-  const TOKEN = "9daeb7ab-8cf3-4ac2-af17-08843554590c";
   const squad = [this.$route.params.full1, this.$route.params.full2, this.$route.params.full3, this.$route.params.full4, this.$route.params.full5];
   this.loading = true;
-
-    try {
-      const account1 = await axios.get(
-        `https://api2.r6stats.com/public-api/stats/${squad[0]}/${this.$route.params.platform}/generic`, 
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          }
-        }
-      );
-      this.team.PlayerOne = account1.data;
-
-      const account2 = await axios.get(
-        `https://api2.r6stats.com/public-api/stats/${squad[1]}/${this.$route.params.platform}/generic`, 
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          }
-        }
-      );
-      this.team.PlayerTwo = account2.data;
-
-      const account3 = await axios.get(
-        `https://api2.r6stats.com/public-api/stats/${squad[2]}/${this.$route.params.platform}/generic`, 
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          }
-        }
-      );
-      this.team.PlayerThree = account3.data;
-
-      const account4 = await axios.get(
-        `https://api2.r6stats.com/public-api/stats/${squad[3]}/${this.$route.params.platform}/generic`, 
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          }
-        }
-      );
-      this.team.PlayerFour = account4.data;
-
-      const account5 = await axios.get(
-        `https://api2.r6stats.com/public-api/stats/${squad[4]}/${this.$route.params.platform}/generic`, 
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          }
-        }
-      );
-      this.team.PlayerFive = account5.data;
-
-      console.log(this.team);
-      this.loading = false;
-
-    } catch (err) {
-      this.loading = false;
-      this.error = err
-    }
+  try {
+    const account1 = await axios.get(`/api/lookup/account/${squad[0]}/${this.$route.params.platform}`);
+    this.team.PlayerOne = account1.data;
+    const account2 = await axios.get(`/api/lookup/account/${squad[1]}/${this.$route.params.platform}`);
+    this.team.PlayerTwo = account2.data;
+    const account3 = await axios.get(`/api/lookup/account/${squad[2]}/${this.$route.params.platform}`);
+    this.team.PlayerThree = account3.data;
+    const account4 = await axios.get(`/api/lookup/account/${squad[3]}/${this.$route.params.platform}`);
+    this.team.PlayerFour = account4.data;
+    const account5 = await axios.get(`/api/lookup/account/${squad[4]}/${this.$route.params.platform}`);
+    this.team.PlayerFive = account5.data;
+    console.log(this.team);
+    this.loading = false;
+  } 
+  catch (err) {
+    this.loading = false;
+    this.error = err
+  }
   }
 };
 </script>

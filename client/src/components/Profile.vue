@@ -45,28 +45,23 @@ export default {
     return {
       loading: false,
       error: null,
-      profileData: null
+      profileData: null,
     };
   },
   beforeCreate() {
     document.body.className = "body-bg-no-image";
   },
   async created() {
-    // const TOKEN = "9daeb7ab-8cf3-4ac2-af17-08843554590c";
     this.loading = true;
     try {
       const account = await axios.get(
-        `/lookup/account/${this.$route.params.gamertag}/${this.$route.params.platform}`, 
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${TOKEN}`,
-        //   }
-        // }
+        `/api/lookup/account/${this.$route.params.gamertag}/${this.$route.params.platform}`, 
       );
       this.profileData = account.data;
       console.log(this.profileData);
       this.loading = false;
-    } catch (err) {
+    } 
+    catch (err) {
       this.loading = false;
       this.error = err
     }
