@@ -34,7 +34,7 @@ apiRouter.get("/lookup/account/:gamertag/:platform", (req, res) => {
         });
 });
 
-userRouter.get('/lookup/account/freqList', (req, res) => {
+apiRouter.get('/lookup/account/freqList', (req, res) => {
     getUserSavedList()
         .then((user) => {
             res.send(user);
@@ -44,27 +44,27 @@ userRouter.get('/lookup/account/freqList', (req, res) => {
             res.send(err);
         });
 });
-userRouter.post('/lookup/account/freqList', (req, res) => {
-    addToUserSavedList(req.body)
-        .then((user) => {
-            console.log('Account created!');
-            res.send('account saved');
-        })
-        .catch((err) => {
-            console.log(err);
-            res.send(err);
-        });
+apiRouter.post("/lookup/account/freqList", (req, res) => {
+  addToUserSavedList(req.body)
+    .then((user) => {
+      console.log("Account created!");
+      res.send("account saved");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
 });
-userRouter.delete('/lookup/account/freqList/:id', (req, res) => {
-    removeFromUserSavedList(req.params.id)
-        .then((user) => {
-            console.log('Account created!');
-            res.send('account saved');
-        })
-        .catch((err) => {
-            console.log(err);
-            res.send(err);
-        });
+apiRouter.delete("/lookup/account/freqList/:id", (req, res) => {
+  removeFromUserSavedList(req.params.id)
+    .then((user) => {
+      console.log("Account created!");
+      res.send("account saved");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
 });
 
 apiRouter.get("/test", (req, res) => {
