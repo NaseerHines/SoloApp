@@ -3,82 +3,120 @@
     <div v-if="loading">
       <h3>Loading...</h3>
     </div>
+    <div v-if="loading === false" class="team">
+      <div>
+        <PlayerOne v-bind:PlayerOne="team.PlayerOne"/>
+      </div>
+      <div>
+        <PlayerTwo v-bind:PlayerTwo="team.PlayerTwo"/>
+      </div>
+      <div>
+        <PlayerThree v-bind:PlayerThree="team.PlayerThree"/>
+      </div>
+      <div>
+        <PlayerFour v-bind:PlayerFour="team.PlayerFour"/>
+      </div>
+      <div>
+        <PlayerFive v-bind:PlayerFive="team.PlayerFive"/>
+      </div>
+    </div>
     <div v-if="error">
       <h1>{{error}}</h1>
-      <router-link to="/">Go Back</router-link>
-    </div>
-    <div v-if="team.squadmem1" class="container">
-      <h1 class="gamertag">
-        <img :src="team.squadmem1.avatar_url_146" alt class="platform-avatar" />
-        {{team.squadmem1.username}}
-      </h1>
-      <div class="grid">
-        <div>
-          <img :src="team.squadmem1.avatar_url_146" alt />
-        </div>
-        <div>
-          <ul>
-            <li>
-              <h4>Account Level</h4>
-              <p>{{team.squadmem1.progression.level}}</p>
-              <h4>Playtime</h4>
-              <p>{{Math.round(team.squadmem1.stats.general.playtime / 60 / 60)}} hours</p>
-              <h4>Platform</h4>
-              <p>{{team.squadmem1.platform}}</p>
-              <h4>KD Ratio</h4>
-              <p>{{team.squadmem1.stats.general.kd}}</p>
-              <h4>WL Ratio</h4>
-              <p>{{team.squadmem1.stats.general.wl}}</p>
-            </li>
-          </ul>
-        </div>
-      </div>
       <router-link to="/">Go Back</router-link>
     </div>
   </section>
 </template>
 <script>
 import axios from "axios";
+import PlayerOne from "./PlayerOne";
+import PlayerTwo from "./PlayerTwo";
+import PlayerThree from "./PlayerThree";
+import PlayerFour from "./PlayerFour";
+import PlayerFive from "./PlayerFive";
 export default {
   name: "Team",
+  components: {
+    PlayerOne,
+    PlayerTwo,
+    PlayerThree,
+    PlayerFour,
+    PlayerFive
+  },
   data() {
     return {
       loading: false,
       error: null,
       team: {
-        squadmem1: null,
-        squadMem2: null,
-        squadMem3: null,
-        squadMem4: null,
-        squadMem5: null
+        PlayerOne: null,
+        PlayerTwo: null,
+        PlayerThree: null,
+        PlayerFour: null,
+        PlayerFive: null
       },
     };
   },
   beforeCreate() {
-      console.log('hit');
-      console.log(this.$route.params);
     document.body.className = "body-bg-no-image";
   },
 async created() {
-    const TOKEN = "9daeb7ab-8cf3-4ac2-af17-08843554590c";
-    const squad = [this.$route.params.full1, this.$route.params.full2, this.$route.params.full3, this.$route.params.full4, this.$route.params.full5];
-    console.log(squad);        
-    this.loading = true;
+  const TOKEN = "9daeb7ab-8cf3-4ac2-af17-08843554590c";
+  const squad = [this.$route.params.full1, this.$route.params.full2, this.$route.params.full3, this.$route.params.full4, this.$route.params.full5];
+  this.loading = true;
+
     try {
-      for (let user = 0; user < squad.length; user++) {
-        for (let mem in this.team) {
-            this.team[mem] = await axios.get(
-            `https://api2.r6stats.com/public-api/stats/${squad[0]}/${this.$route.params.platform}/generic`, 
-                {
-                    headers: {
-                        Authorization: `Bearer ${TOKEN}`,
-                    }
-                }
-            )
-            console.log(this.team[mem]);
-            console.log(this.team.squadmem1);
+      const account1 = await axios.get(
+        `https://api2.r6stats.com/public-api/stats/${squad[0]}/${this.$route.params.platform}/generic`, 
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          }
         }
-    }
+      );
+      this.team.PlayerOne = account1.data;
+
+      const account2 = await axios.get(
+        `https://api2.r6stats.com/public-api/stats/${squad[1]}/${this.$route.params.platform}/generic`, 
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          }
+        }
+      );
+      this.team.PlayerTwo = account2.data;
+
+      const account3 = await axios.get(
+        `https://api2.r6stats.com/public-api/stats/${squad[2]}/${this.$route.params.platform}/generic`, 
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          }
+        }
+      );
+      this.team.PlayerThree = account3.data;
+
+      const account4 = await axios.get(
+        `https://api2.r6stats.com/public-api/stats/${squad[3]}/${this.$route.params.platform}/generic`, 
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          }
+        }
+      );
+      this.team.PlayerFour = account4.data;
+
+      const account5 = await axios.get(
+        `https://api2.r6stats.com/public-api/stats/${squad[4]}/${this.$route.params.platform}/generic`, 
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          }
+        }
+      );
+      this.team.PlayerFive = account5.data;
+
+      console.log(this.team);
+      this.loading = false;
+
     } catch (err) {
       this.loading = false;
       this.error = err

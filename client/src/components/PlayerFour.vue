@@ -7,28 +7,28 @@
       <h1>{{error}}</h1>
       <router-link to="/">Go Back</router-link>
     </div>
-    <div v-if="profileData" class="container">
+    <div v-if="PlayerFour" class="container">
       <h1 class="gamertag">
-        <img :src="profileData.avatar_url_146" alt class="platform-avatar" />
-        {{profileData.username}}
+        <img :src="PlayerFour.avatar_url_146" alt class="platform-avatar" />
+        {{PlayerFour.username}}
       </h1>
       <div class="grid">
         <div>
-          <img :src="profileData.avatar_url_146" alt />
+          <img :src="PlayerFour.avatar_url_146" alt />
         </div>
         <div>
           <ul>
             <li>
               <h4>Account Level</h4>
-              <p>{{profileData.progression.level}}</p>
+              <p>{{PlayerFour.progression.level}}</p>
               <h4>Playtime</h4>
-              <p>{{Math.round(profileData.stats.general.playtime / 60 / 60)}} hours</p>
+              <p>{{Math.round(PlayerFour.stats.general.playtime / 60 / 60)}} hours</p>
               <h4>Platform</h4>
-              <p>{{profileData.platform}}</p>
+              <p>{{PlayerFour.platform}}</p>
               <h4>KD Ratio</h4>
-              <p>{{profileData.stats.general.kd}}</p>
+              <p>{{PlayerFour.stats.general.kd}}</p>
               <h4>WL Ratio</h4>
-              <p>{{profileData.stats.general.wl}}</p>
+              <p>{{PlayerFour.stats.general.wl}}</p>
             </li>
           </ul>
         </div>
@@ -38,40 +38,16 @@
   </section>
 </template>
 <script>
-import axios from "axios";
 export default {
   name: "Profile",
+  props: ["PlayerFour"],
   data() {
     return {
       loading: false,
       error: null,
-      profileData: null
     };
   },
-  beforeCreate() {
-    document.body.className = "body-bg-no-image";
-  },
-  async created() {
-    // const TOKEN = "9daeb7ab-8cf3-4ac2-af17-08843554590c";
-    this.loading = true;
-    try {
-      const account = await axios.get(
-        `/lookup/account/${this.$route.params.gamertag}/${this.$route.params.platform}`, 
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${TOKEN}`,
-        //   }
-        // }
-      );
-      this.profileData = account.data;
-      console.log(this.profileData);
-      this.loading = false;
-    } catch (err) {
-      this.loading = false;
-      this.error = err
-    }
-  }
-};
+}
 </script>
 
 <style scoped>
