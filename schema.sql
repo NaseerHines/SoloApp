@@ -20,15 +20,11 @@ CREATE TABLE `Team` (
   `playerThree` varchar(255),
   `playerFour` varchar(255)
 );
-CREATE TABLE `Favorites` (
+CREATE TABLE `SavedList` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `account` int,
-  `favoritesList` varchar(255)
-);
-CREATE TABLE `Frequently` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `account` int,
-  `frequent List` varchar(255)
+  `gamertag` varchar(55),
+  `platform` varcharacter(15)
 );
 CREATE TABLE `Stats` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -37,7 +33,7 @@ CREATE TABLE `Stats` (
   `wlratio` int,
   `playtime` int
 );
-ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Frequently` (`account`);
+
 ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Team` (`squadLeader`);
 ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Stats` (`account`);
-ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `Favorites` (`account`);
+ALTER TABLE `Account` ADD FOREIGN KEY (`id`) REFERENCES `SavedList` (`account`);
