@@ -1,16 +1,13 @@
 const mysql = require("mysql");
 const util = require("util");
-
-const DB_HOST = "localhost";
-const DB_USER = "root";
-const DB_PASS = "";
-const DB_NAME = "siege";
+const Hide = require("../configs");
 
 const connection = mysql.createConnection({
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASS,
-    database: DB_NAME,
+    host: Hide.DB_HOST,
+    user: Hide.DB_USER,
+    password: Hide.DB_PASS,
+    database: Hide.DB_NAME,
+    socketPath: '/var/lib/mysqld/mysqld.sock'
 });
 
 const query = util.promisify(connection.query).bind(connection);
