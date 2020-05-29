@@ -1,24 +1,27 @@
 const mysql = require("mysql");
 const util = require("util");
-const Hide = require("../configs");
+
+const DB_HOST = 'localhost';
+const DB_USER = 'root';
+const DB_PASS = '';
+const DB_NAME = 'soloapp';
 
 const connection = mysql.createConnection({
-  host: Hide.DB_HOST,
-  user: Hide.DB_USER,
-  password: Hide.DB_PASS,
-  database: Hide.DB_NAME,
-  sockertPath: "/var/run/mysqld/mysqld.sock",
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
 });
 
-const query = util.promisify(connection.query).bind(connection);
-
-connection.connect((err) => {
+connection.connect(err => {
     if (err) {
         console.log(err);
     } else {
-        console.log("Database connected");
+        console.log('Database connected');
     }
 });
+
+const query = util.promisify(connection.query).bind(connection);
 
 const getUserSavedList = (id) => {
     const mysqlQuery = 'SELECT * FROM SavedList WHERE Account = ?;';
