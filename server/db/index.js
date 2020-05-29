@@ -3,11 +3,11 @@ const util = require("util");
 const Hide = require("../configs");
 
 const connection = mysql.createConnection({
-    host: Hide.DB_HOST,
-    user: Hide.DB_USER,
-    password: Hide.DB_PASS,
-    database: Hide.DB_NAME,
-    socketPath: '/var/lib/mysqld/mysqld.sock'
+  host: Hide.DB_HOST,
+  user: Hide.DB_USER,
+  password: Hide.DB_PASS,
+  database: Hide.DB_NAME,
+  sockertPath: "/var/run/mysqld/mysqld.sock",
 });
 
 const query = util.promisify(connection.query).bind(connection);
