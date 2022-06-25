@@ -27,7 +27,7 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "r6statsapi": "^1.0.3",
     "vue-google-login": "^2.0.5"
   },
